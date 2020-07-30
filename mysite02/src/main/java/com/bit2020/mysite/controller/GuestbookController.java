@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bit2020.mvc.util.MVCUtil;
+import com.bit2020.mysite.repository.GuestbookRepository;
+import com.bit2020.mysite.vo.GuestbookVo;
 
 /**
  * Servlet implementation class GuestbookController
@@ -28,7 +30,21 @@ public class GuestbookController extends HttpServlet {
 		
 		String action = request.getParameter("a");
 		
-		MVCUtil.forward("guestbook.list", request, response);
+		if("insert".equals(action)) {
+			GuestbookVo vo = new GuestbookVo();
+			
+			
+			vo.setName(request.getParameter("name"));
+			vo.setPassword(request.getParameter("pass"));
+			vo.setMessage(request.getParameter("content"));
+			
+			new GuestbookRepository().insert(vo);
+			
+			MVCUtil.redirect(request.getContextPath(), request, response);
+			
+		}
+		
+		MVCUtil.forward("guestbook/list", request, response);
 		
 	}
 
