@@ -1,5 +1,12 @@
+<%@page import="com.bit2020.mysite.repository.GuestbookRepository"%>
+<%@page import="java.util.List"%>
+<%@page import="com.bit2020.mysite.vo.GuestbookVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<%
+		List<GuestbookVo> list = new GuestbookRepository().findAll(); 
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +20,7 @@
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="/guestbook" method="post">
+				<form action="<%=request.getContextPath() %>/guestbook" method="post">
 					<input type="hidden" name="a" value="insert">
 					<table>
 						<tr>
@@ -32,18 +39,26 @@
 				</form>
 				<ul>
 					<li>
+					<%
+						int count = list.size();
+						int index = 0;
+						for(GuestbookVo vo : list){
+					%>
 						<table>
 							<tr>
-								<td>[4]</td>
-								<td>안대혁</td>
-								<td>2015-11-10 11:22:30</td>
-								<td><a href="<%=request.getContextPath()%>/mysite03/guestbook/deleteform">삭제</a></td>
+								<td><%=count - index++ %></td>
+								<td><%= vo.getName() %></td>
+								<td><%= vo.getReg_date() %></td>
+								<td><a href="<%=request.getContextPath()%>/guestbook?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
 							</tr>
 							<tr>
-								<td colspan=4>안녕하세요. ^^;<br> 하하하하
+								<td colspan=4><%= vo.getMessage().replaceAll("\n", "<br>") %><br> 하하하하
 								</td>
 							</tr>
 						</table> <br>
+						<%
+						}
+						%>
 					</li>
 				</ul>
 			</div>

@@ -15,43 +15,56 @@ import com.bit2020.mysite.vo.GuestbookVo;
  */
 public class GuestbookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("utf-8");
-		
+
 		String action = request.getParameter("a");
-		
-		if("insert".equals(action)) {
+
+		if ("insert".equals(action)) {
 			GuestbookVo vo = new GuestbookVo();
-			
-			
+
 			vo.setName(request.getParameter("name"));
 			vo.setPassword(request.getParameter("pass"));
 			vo.setMessage(request.getParameter("content"));
-			
+
 			new GuestbookRepository().insert(vo);
-			
-			MVCUtil.redirect(request.getContextPath(), request, response);
-			
+
+			MVCUtil.forward("/guestbook/list", request, response);
+
+		} else if ("delete".equals(action)) {
+
+			new GuestbookRepository().delete(Long.parseLong(request.getParameter("no")),
+					request.getParameter("password"));
+
+			MVCUtil.forward("/guestbook/list", request, response);
+
+		} else if ("deleteform".equals(action)) {
+			MVCUtil.forward("guestbook/deleteform", request, response);
+		} else {
+
+			MVCUtil.forward("/guestbook/list", request, response);
+
 		}
-		
-		MVCUtil.forward("guestbook/list", request, response);
-		
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
