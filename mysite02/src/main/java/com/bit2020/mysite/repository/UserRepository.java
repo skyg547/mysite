@@ -75,34 +75,59 @@ public class UserRepository {
 		return connection;
 	}
 
-	/*
-	 * public UserVo findByNo(long no) { // TODO Auto-generated method stub
-	 * 
-	 * UserVo result = null; Connection connection = null; PreparedStatement pstmt =
-	 * null; ResultSet rs=null; try { // 1. 연결하기 connection = getConnection();
-	 * 
-	 * // 2. SQL 준비 String sql =
-	 * "select no,name from user where email=? and password = password(?)"; pstmt =
-	 * connection.prepareStatement(sql); pstmt.setString(1, email);
-	 * pstmt.setString(2, password);
-	 * 
-	 * 
-	 * rs = pstmt.executeQuery();
-	 * 
-	 * // 3. 바인딩(binding)
-	 * 
-	 * if(rs.next()) { Long no =rs.getLong(1); String name = rs.getString(2);
-	 * 
-	 * result = new UserVo(); result.setNo(no); result.setName(name); }
-	 * 
-	 * 
-	 * } catch (SQLException e) { System.out.println("에러:" + e); } finally { try {
-	 * if(pstmt != null) { pstmt.close(); } if(connection != null) {
-	 * connection.close(); }
-	 * 
-	 * if(rs != null) { rs.close(); } } catch (SQLException e) {
-	 * e.printStackTrace(); } } return result; }
-	 */
+	public UserVo findByNo(Long no) {
+		UserVo result = null;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			// 1. 연결하기
+			connection = getConnection();
+
+			// 2. SQL 준비
+			String sql = 
+				"select no, name, email, gender" +
+				"  from user" + 
+				" where no=?";  
+			pstmt = connection.prepareStatement(sql);
+
+			// 3. 바인딩(binding)
+			pstmt.setLong(1, no);
+
+			// 4. sql 실행	
+			rs = pstmt.executeQuery();
+
+			// 5. 결과 가져오기
+			if(rs.next()) {
+				result = new UserVo();
+
+				result.setNo(rs.getLong(1));
+				result.setName(rs.getString(2));
+				result.setEmail(rs.getString(3));
+				result.setGender(rs.getString(4));
+			}
+		} catch (SQLException e) {
+			System.out.println("에러:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+	
 	public UserVo findByEmailAndPassWord(String email, String password) {
 		UserVo result = null;
 		Connection connection = null;

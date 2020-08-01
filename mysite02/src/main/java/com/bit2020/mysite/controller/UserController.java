@@ -84,7 +84,8 @@ public class UserController extends HttpServlet {
 		} else if ("updateform".equals(action)) {
 			HttpSession session = request.getSession();
 			UserVo authUser = (UserVo)session.getAttribute("authUser");
-			//UserVo userVo =  new UserRepository().findByNo(authUser.getNo());
+			UserVo userVo =  new UserRepository().findByNo(authUser.getNo());
+			request.setAttribute("userVo", userVo);
 			MVCUtil.forward("user/updateform", request, response);
 		} else {
 

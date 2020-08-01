@@ -31,6 +31,10 @@ public class MainController extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
+		// 1. 컨테이너 설정 파일(bean 설정)의 path를 가져 오는 작업
+		String configPath = getServletConfig().getInitParameter("config");
+		// 2. 컨테이너를 만든다.
+		// ApplicationContext ac = new WebXmlApplicationContext(configPath);
 		System.out.println("인ㅅ 호출");
 		super.init();
 	}
@@ -63,15 +67,15 @@ public class MainController extends HttpServlet {
 				}
 			}
 		}
-		//쿠키
+		// 쿠키
 		visitCount++;
-		
+
 		Cookie cookie = new Cookie("visitCount", String.valueOf(visitCount));
-		
-		cookie.setMaxAge(24*60*60);
+
+		cookie.setMaxAge(24 * 60 * 60);
 		cookie.setPath(request.getContextPath());
 		response.addCookie(cookie);
-		
+
 		MVCUtil.forward("main/index", request, response);
 	}
 
