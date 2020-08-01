@@ -1,4 +1,4 @@
-package com.bit2020.mvc.util;
+package com.bit2020.web.util;
 
 import java.io.IOException;
 

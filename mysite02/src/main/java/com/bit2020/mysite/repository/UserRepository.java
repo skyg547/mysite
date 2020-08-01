@@ -74,6 +74,35 @@ public class UserRepository {
 		System.out.println("연결 성공");
 		return connection;
 	}
+
+	/*
+	 * public UserVo findByNo(long no) { // TODO Auto-generated method stub
+	 * 
+	 * UserVo result = null; Connection connection = null; PreparedStatement pstmt =
+	 * null; ResultSet rs=null; try { // 1. 연결하기 connection = getConnection();
+	 * 
+	 * // 2. SQL 준비 String sql =
+	 * "select no,name from user where email=? and password = password(?)"; pstmt =
+	 * connection.prepareStatement(sql); pstmt.setString(1, email);
+	 * pstmt.setString(2, password);
+	 * 
+	 * 
+	 * rs = pstmt.executeQuery();
+	 * 
+	 * // 3. 바인딩(binding)
+	 * 
+	 * if(rs.next()) { Long no =rs.getLong(1); String name = rs.getString(2);
+	 * 
+	 * result = new UserVo(); result.setNo(no); result.setName(name); }
+	 * 
+	 * 
+	 * } catch (SQLException e) { System.out.println("에러:" + e); } finally { try {
+	 * if(pstmt != null) { pstmt.close(); } if(connection != null) {
+	 * connection.close(); }
+	 * 
+	 * if(rs != null) { rs.close(); } } catch (SQLException e) {
+	 * e.printStackTrace(); } } return result; }
+	 */
 	public UserVo findByEmailAndPassWord(String email, String password) {
 		UserVo result = null;
 		Connection connection = null;
@@ -127,4 +156,5 @@ public class UserRepository {
 		
 		return result;
 	}
+	
 }

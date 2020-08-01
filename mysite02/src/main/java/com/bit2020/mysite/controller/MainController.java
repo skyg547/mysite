@@ -8,12 +8,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bit2020.mvc.util.MVCUtil;
+import com.bit2020.web.util.MVCUtil;
 
 /**
  * Servlet implementation class MainController
  */
 public class MainController extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println("서비스 호출");
+		super.service(req, resp);
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		System.out.println("디스트로이 호출");
+		super.destroy();
+	}
+
+	@Override
+	public void init() throws ServletException {
+		// TODO Auto-generated method stub
+		System.out.println("인ㅅ 호출");
+		super.init();
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	/**

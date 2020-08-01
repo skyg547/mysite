@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.bit2020.mvc.util.MVCUtil;
 import com.bit2020.mysite.repository.UserRepository;
 import com.bit2020.mysite.vo.UserVo;
+import com.bit2020.web.util.MVCUtil;
 
 /**
  * Servlet implementation class UserController
@@ -81,6 +81,11 @@ public class UserController extends HttpServlet {
 			MVCUtil.redirect(request.getContextPath(), request, response);
 		} else if ("loginform".equals(action)) {
 			MVCUtil.forward("user/loginform", request, response);
+		} else if ("updateform".equals(action)) {
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			//UserVo userVo =  new UserRepository().findByNo(authUser.getNo());
+			MVCUtil.forward("user/updateform", request, response);
 		} else {
 
 			MVCUtil.redirect(request.getContextPath(), request, response);

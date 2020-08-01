@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bit2020.mvc.util.MVCUtil;
 import com.bit2020.mysite.repository.GuestbookRepository;
 import com.bit2020.mysite.vo.GuestbookVo;
+import com.bit2020.web.util.MVCUtil;
 
 /**
  * Servlet implementation class GuestbookController
@@ -43,9 +43,10 @@ public class GuestbookController extends HttpServlet {
 			MVCUtil.forward("/guestbook/list", request, response);
 
 		} else if ("delete".equals(action)) {
-
-			new GuestbookRepository().delete(Long.parseLong(request.getParameter("no")),
-					request.getParameter("password"));
+			
+			String no = request.getParameter("no");
+			
+			new GuestbookRepository().delete(Long.parseLong(no), request.getParameter("password"));
 
 			MVCUtil.forward("/guestbook/list", request, response);
 
